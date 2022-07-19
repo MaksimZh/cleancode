@@ -14,3 +14,16 @@ dirName, fileName - output_dir, output_file
 
 c - monic_coefs
 // младшие коэффициенты унитарного (monic) многочлена
+
+
+6.2
+
+for key in f.keys():
+    ...
+// key - ключ в словаре
+
+rename_dict = {}
+...
+data.rename(rename_dict)
+// dict - словарь для переименовывания
+
