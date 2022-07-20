@@ -32,3 +32,24 @@ head, tail
 
 index_tuple = (slice(None),) + (np.newaxis,) * (len(args) - 1)
 // tuple - кортеж
+
+
+6.3
+
+source_group, dest_group
+// группы записей во входном и выходном файлах hdf5
+
+figure_width, figure_height
+// размеры графика
+
+k_re, k_im
+// действительная и мнимая часть волнового числа
+
+
+6.4
+
+z - matrix_poly
+
+a - coef_columns
+
+s - singular_values
