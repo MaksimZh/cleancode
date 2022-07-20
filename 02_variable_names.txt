@@ -27,3 +27,8 @@ rename_dict = {}
 data.rename(rename_dict)
 // dict - словарь для переименовывания
 
+head, tail
+// начало и конец связанного списка или очереди
+
+index_tuple = (slice(None),) + (np.newaxis,) * (len(args) - 1)
+// tuple - кортеж
