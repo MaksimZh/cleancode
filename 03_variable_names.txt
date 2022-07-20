@@ -12,3 +12,37 @@ last - drop_last
 
 7.2
 
+done = False
+while (type(node) is not DummyNode) and not done:
+    ...
+// done - флаг завершения цикла
+
+found = [False] * hash_table.size
+for h in hashes:
+    found[h] = True
+// found - признак того, что ячейка в хэш-таблице занята
+
+
+7.3
+
+for row in range(mx.shape[0]):
+    for col in range(mx.shape[1]):
+        ...
+// строка и столбец матрицы
+
+
+7.4
+
+energy_min, energy_max
+// границы диапазона энергии для расчётов
+
+input_file, output_file
+// имена входного и выходного файлов
+
+pos = k2 >= 0
+neg = k2 < 0
+// массивы флагов, отмечающих положительные и отрицательные элементы
+
+
+7.5
+
