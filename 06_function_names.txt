@@ -15,3 +15,9 @@ calcMiddleY - calc_middle_solutions
 
 calcEndY - calc_end_solutions
 // вычисление решений системы уравнений на конечном отрезке
+
+waveParams - calc_wavenumber_and_coefs
+// вычисление волнового числа и коэффициентов для сферической волны
+
+segmentSolutions - calc_solution_pieces
+// вычисление кусочков решения
