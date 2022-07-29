@@ -1,0 +1,182 @@
+ 1 ============================================================================
+def norm(a):
+    lo = np.min(a)
+    up = np.max(a)
+    return (a - lo) / (up - lo)
+----------------------------------------
+def normalize(a):
+    lo = np.min(a)
+    up = np.max(a)
+    delta = up - lo
+    if delta == 0:
+        return a * 0
+    else:
+        return (a - lo) / delta
+
+// добавлена обработка случая с нулевым знаменателем
+
+
+ 2 ============================================================================
+parser = parentSubparsers.add_parser("bands",
+    help = "Band energy calculation",
+    description = "Calculate energy bands")
+----------------------------------------
+def loc(s):
+    return s
+...
+parser = parentSubparsers.add_parser("bands",
+    help = loc("Band energy calculation"),
+    description = loc("Calculate energy bands"))
+
+// добавлена возможность локализации
+// позже можно будет изменить функцию loc так, чтобы она использовала какой-то метод интернационализации
+
+
+ 3 ============================================================================
+subparsers = parser.add_subparsers(
+    dest = "structure",
+    metavar = "STRUCTURE",
+    help = "Structure kind")
+-------------------------------------------------
+subparsers = parser.add_subparsers(
+    dest = "structure",
+    metavar = "STRUCTURE",
+    help = loc("Structure kind"))
+
+// добавлена возможность локализации
+
+
+ 4 ============================================================================
+parser = parentSubparsers.add_parser("bulk",
+        help = "Bulk material with translation symmetry in all directions",
+        description = "Calculate energy bands for bulk material",
+        formatter_class = argparse.RawTextHelpFormatter)
+-------------------------------------------------
+parser = parentSubparsers.add_parser("bulk",
+        help = loc("Bulk material with translation symmetry in all directions"),
+        description = loc("Calculate energy bands for bulk material"),
+        formatter_class = argparse.RawTextHelpFormatter)
+
+// добавлена возможность локализации
+
+
+ 5 ============================================================================
+help = textwrap.dedent("""\
+    Each parameter is set as follows:
+        NAME=VALUE                set exact value
+        NAME=[FIRST]:LAST[:STEP]  set mesh (LAST point is always included)
+                                    default FIRST = 0
+                                    default STEP = (LAST - FIRST) / 10
+        NAME=load:FILE_NAME       load values from file
+    """))
+----------------------------------------
+help = textwrap.dedent(f"""\
+    {loc('Each parameter is set as follows:')}
+        NAME=VALUE                {loc('set exact value')}
+        NAME=[FIRST]:LAST[:STEP]  {loc('set mesh (LAST point is always included)')}
+                                    {loc('default')} FIRST = 0
+                                    {loc('default')} STEP = (LAST - FIRST) / 10
+        NAME=load:FILE_NAME       {loc('load values from file')}
+    """))
+
+// добавлена возможность локализации
+
+
+ 6 ============================================================================
+parser.add_argument("--spin-split", action = "store_true",
+    help = "assume there is no spin degeneracy")
+-------------------------------------------------
+parser.add_argument("--spin-split", action = "store_true",
+    help = loc("assume there is no spin degeneracy"))
+
+// добавлена возможность локализации
+
+
+ 7 ============================================================================
+if expansion_coefs is None:
+    ...
+----------------------------------------
+is_lin_indep_columns = expansion_coefs is None
+if is_lin_indep_columns:
+    ...
+
+// раскрыт смысл условия - линейная независимость векторов
+
+
+ 8 ============================================================================
+if singular_values[-1] > atol:
+    ...
+-------------------------------------------------
+is_lin_indep_columns = singular_values[-1] > atol
+if is_lin_indep_columns:
+    ...
+
+// раскрыт смысл условия - линейная независимость векторов
+
+
+ 9 ============================================================================
+if len(params) == 1 and params[0][0] == "k":
+    ...
+-------------------------------------------------
+single_mesh_param = len(params) == 1 and params[0][0] == "k"
+if single_mesh_param:
+    ...
+
+// раскрыт смысл условия - сетка задаётся одним параметром
+
+
+10 ============================================================================
+if sorted(meshes.keys()) != sorted(keys):
+    raise Exception("Invalid mesh key set")
+-------------------------------------------------
+keys_match = sorted(meshes.keys()) == sorted(keys)
+if not keys_match:
+    raise Exception("Invalid mesh key set")
+
+// раскрыт смысл условия - ключи двух словарей совпадают
+
+
+11 ============================================================================
+if len(segments) == 1:
+    if segments[0] == "all":
+        ...
+-------------------------------------------------
+all_bands_required = segments == ["all"]
+if all_bands_required:
+    ...
+
+// раскрыт смысл условия и убраны вложенные условные операторы
+
+
+12 ============================================================================
+if all_bands_required:
+    if spinSplit:
+        return slice(0, 8)
+    else:
+        return slice(0, 8, 2)
+elif len(segments) == 1:
+    return parseBand(segments[0], 6)
+elif len(segments) == 2:
+    lo = parseBand(segments[0], 6)
+    up = parseBand(segments[1], 6)
+    if spinSplit:
+        return slice(lo, up + 1)
+    else:
+        return slice(lo, up + 2, 2)
+else:
+    raise Exception("Invalid bands")
+-------------------------------------------------
+band_stride = 1 if spinSplit else 2
+...
+if all_bands_required:
+    return slice(0, 8, band_stride)
+elif len(segments) == 1:
+    return parseBand(segments[0], 6)
+elif len(segments) == 2:
+    lo = parseBand(segments[0], 6)
+    up = parseBand(segments[1], 6)
+    return slice(lo, up + band_stride, band_stride)
+else:
+    raise Exception("Invalid bands")
+
+// вложенные условные операторы убраны путём явного преобразования логического значения в целое
