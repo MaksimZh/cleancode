@@ -93,7 +93,45 @@ while dividend_tail is not None:
 
 
  4 ============================================================================
+result = np.zeros((n,) + a.shape[1:] + b.shape[1:],
+    dtype = np.common_type(a, b))
+for i in range(n):
+    for ia in range(na):
+        for ib in range(nb):
+            ma = -ja + ia
+            mb = -jb + ib
+            m = -j + i
+            result[i] += np.multiply.outer(a[ia], b[ib]) \
+                * clebschGordan(j, m, ja, ma, jb, mb)
 ----------------------------------------
+range_a = list(zip(a, np.arange(-ja, ja + 0.1)))
+range_b = list(zip(b, np.arange(-jb, jb + 0.1)))
+result = []
+for m in np.arange(-j, j + 0.1):
+    value = 0
+    for va, ma in range_a:
+        for vb, mb in range_b:
+            value = value + \
+                np.multiply.outer(va, vb) \
+                * clebschGordan(j, m, ja, ma, jb, mb)
+    result.append(value)
+    del value
+result = np.array(result)
+
+// списки вместо массивов
+// последовательный доступ к элементам сразу двух списков с помощью zip
+
 
  5 ============================================================================
+scatLeft1 = np.zeros(scat_shape, dtype=complex)
+scatLeft1[0] = np.eye(dim * 2)
+for i in range(len(trans)):
+    scatLeft1[i + 1] = \
+        scatmx.joinScatTrans(scatLeft1[i], trans1[i])
 ----------------------------------------
+scatLeft1 = [np.eye(dim * 2)]
+for t in trans:
+    scatLeft1.append(scatmx.joinScatTrans(scatLeft1[-1], t))
+scatLeft1 = np.array(scatLeft1)
+
+// список вместо массива
