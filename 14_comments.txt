@@ -66,20 +66,48 @@ b = xr.DataArray(
 3.2
 
 = 1 ===========================================================================
+enum dim = 8; // Hamiltonian dimension
 ----------------------------------------
+enum hamiltonian_dim = 8;
 
 
 = 2 ===========================================================================
+string fnameOutBS = ""; // Band structure
+string fnameOutCD = ""; // Charge density
 ----------------------------------------
+string band_struct_output = "";
+string charge_dens_output = "";
 
 
 = 3 ===========================================================================
+double n = 1e+11*1e-16; // total carrier concentration (A^-2)
 ----------------------------------------
+double conc_e_2d_angs = 1e+11*1e-16;
 
 
 = 4 ===========================================================================
+// Energy unit
+E0 = CGS_me * CGS_e^^4 / (kapa^^2 * CGS_hbar^^2 * 2 * kane_g1(T)) / CGS_meV;
+// Length unit
+L0 = CGS_hbar^^2 * kapa / (CGS_e^^2 * CGS_me) * kane_g1(T) / CGS_Angstrom;
 ----------------------------------------
+energy_unit_erg = CGS_me * CGS_e^^4 / (kapa^^2 * CGS_hbar^^2 * 2 * kane_g1(T)) / CGS_meV;
+length_unit_cm = CGS_hbar^^2 * kapa / (CGS_e^^2 * CGS_me) * kane_g1(T) / CGS_Angstrom;
 
 
 = 5 ===========================================================================
+double v1 = basis.vmin; // The beginning of current layer
+foreach(layer; layers)
+{
+    double v2 = v1 + layer.thickness; // The end of current layer
+    ...
+    v1 = v2; // Where curent layer ends the next starts
+}
 ----------------------------------------
+double layer_start = basis.vmin;
+foreach(layer; layers)
+{
+    double layer_end = layer_start + layer.thickness;
+    ...
+    layer_start = layer_end;
+}
